@@ -1,16 +1,25 @@
 
 def buildApp(){
         echo 'Building the application...'
+        steps {
+                script {
+                    sh 'npm install -g'
+                    sh 'npm run build'
+                   
+                }
+            }
 
 }
 
 def testApp(){
         echo 'Testing the application...'
+       
+        sh 'npm run test'
 
 }
 def publishApp(){
         environment {
-            IMAGE_REPO = "praharlokhande/java-maven-app"
+            IMAGE_REPO = "praharlokhande/AngularApp"
         }
         echo 'Publishing the application...'
         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
@@ -21,11 +30,7 @@ def publishApp(){
 }
 def deployApp() {
     echo 'deploying the application...'
-    // environment {
-    //             AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
-    //             AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
-    //             APP_NAME = 'AngularApp'
-    //         }
+   
             steps {
                 script {
                     echo 'deploying docker image...'
