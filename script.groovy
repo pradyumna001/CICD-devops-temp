@@ -1,13 +1,11 @@
 
 def buildApp(){
         echo 'Building the application...'
-        steps {
-                script {
+       
                     sh 'npm install -g'
                     sh 'npm run build'
                    
-                }
-            }
+           
 
 }
 
@@ -31,13 +29,11 @@ def publishApp(){
 def deployApp() {
     echo 'deploying the application...'
    
-            steps {
-                script {
+         
                     echo 'deploying docker image...'
                     sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
                     sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
-                }
-            }
+          
 }
 
 return this
