@@ -14,12 +14,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build') {
-      agent any
-      steps {
-        
-      }
-    }
+       
       stage('Docker Push') {
       agent any
       steps {
@@ -31,6 +26,7 @@ pipeline {
        }
       }
       }
+      
         stage("Test App") {
             steps {
                 script {
