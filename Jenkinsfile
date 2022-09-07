@@ -4,6 +4,8 @@ pipeline {
     agent any
     environment {
         ANSIBLE_SERVER = "167.99.136.157"
+        IMAGE_REPO = "praharlokhande/angularapp:1.1"
+
     }
     stages {
         
@@ -20,10 +22,10 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
             echo '$env.dockerHubUser'
-            sh 'docker build -t praharlokhande/angularapp:1.0 .'
+            sh 'docker build -t ${IMAGE_REPO} .'
             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
           //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
-          sh 'docker push praharlokhande/angularapp:1.0'
+            sh 'docker push ${IMAGE_REPO}'
        }
       }
       }
