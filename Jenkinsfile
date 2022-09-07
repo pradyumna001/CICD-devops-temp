@@ -1,23 +1,13 @@
 
-#!groovy
-
-
-def gv
 
 pipeline {
     agent any
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
+        
         stage("build App") {
             steps {
                 script {
-                    gv.buildApp()
+                    echo "build app"
                 }
             }
         }
@@ -25,7 +15,7 @@ pipeline {
         stage("Test App") {
             steps {
                 script {
-                    gv.testApp()
+                    echo "Test app"
                 }
             }
         }
@@ -33,7 +23,7 @@ pipeline {
             steps {
                 script {
                     
-                    gv.publishApp();
+                    echo "build and push image"
 
                 }
             }
@@ -41,7 +31,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    gv.deployApp()
+                    echo "deploy app"
                 }
             }
         }
