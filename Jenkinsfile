@@ -16,13 +16,13 @@ pipeline {
         }
        
       stage('Docker Push') {
-      agent any
+      agent docker
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            echo "${env.dockerHubUser}"
-            sh "docker build -t ${env.dockerHubUser}/AngularApp:1.0 ."
-          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh "docker push ${env.dockerHubUser}/AngularApp:1.0"
+            echo '$env.dockerHubUser'
+            sh 'docker build -t $env.dockerHubUser/AngularApp:1.0 .'
+          sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
+          sh 'docker push ${env.dockerHubUser}/AngularApp:1.0'
        }
       }
       }
