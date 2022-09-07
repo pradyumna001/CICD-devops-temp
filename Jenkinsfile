@@ -22,7 +22,7 @@ pipeline {
             echo '$env.dockerHubUser'
             sh 'docker build -t praharlokhande/angularapp:1.0 .'
             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
-          sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
+          //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
           sh 'docker push praharlokhande/angularapp:1.0'
        }
       }
