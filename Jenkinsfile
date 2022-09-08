@@ -50,8 +50,11 @@ pipeline {
             steps {
                 script {
                     echo 'deploying docker image...'
-                    sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
-                    sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
+                    sshagent(credentials: ['ssh_mypc']) {
+                        sh 'envsubst < kubernetes/secrets.yaml | kubectl apply -f -'
+                        sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+                        sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
+                      }
                 }
             }
         }
