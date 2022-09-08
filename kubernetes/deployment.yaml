@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: AngularApp
+  name: AngularApp-Deployment
   labels:
     app: AngularApp
 spec:
@@ -14,8 +14,8 @@ spec:
       labels:
         app: AngularApp
     spec:
-#       imagePullSecrets:
-#         - name: docker_secret
+      imagePullSecrets:
+        - name: docker_secret
       containers:
         - name: AngularApp
           image: ${IMAGE_REPO}
