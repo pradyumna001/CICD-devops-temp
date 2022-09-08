@@ -52,6 +52,7 @@ pipeline {
                 script {
                     echo 'deploying docker image...'
                     sshagent(credentials: ['ssh_mypc']) {
+                        echo 'connected via ssh to pradyumna'
                         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                             sh 'kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword"'
                         }
