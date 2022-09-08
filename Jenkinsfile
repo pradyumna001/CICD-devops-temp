@@ -54,11 +54,11 @@ pipeline {
                     sshagent(credentials: ['ssh_mypc']) {
                         echo 'connected via ssh to pradyumna'
                         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                            sh ''
-                            sh 'ssh Pradyumna@192.168.8.100 kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword"'
+                            
+                            sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100 kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword"'
                         }
-                        sh 'ssh Pradyumna@192.168.8.100  && envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
-                        sh 'ssh Pradyumna@192.168.8.100  && envsubst < kubernetes/service.yaml | kubectl apply -f -'
+                        sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+                        sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/service.yaml | kubectl apply -f -'
                       }
                 }
             }
