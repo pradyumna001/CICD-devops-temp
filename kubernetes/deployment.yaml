@@ -14,8 +14,8 @@ spec:
       labels:
         app: AngularApp
     spec:
-      imagePullSecrets:
-        - name: docker_secret
+#       imagePullSecrets:
+#         - name: docker_secret
       containers:
         - name: AngularApp
           image: ${IMAGE_REPO}
