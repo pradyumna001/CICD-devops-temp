@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: AngularApp
+  labels:
+    app: AngularApp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: AngularApp
+  template:
+    metadata:
+      labels:
+        app: AngularApp
+    spec:
+      imagePullSecrets:
+        - name: docker_secret
+      containers:
+        - name: AngularApp
+          image: ${IMAGE_REPO}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
