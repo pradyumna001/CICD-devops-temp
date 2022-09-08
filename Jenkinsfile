@@ -52,7 +52,7 @@ pipeline {
                 script {
                     echo 'deploying docker image...'
                     sshagent(['ssh_mypc']) {
-                        sh 'ssh -o StrictHostKeyChecking=no -l pradyumna@DESKTOP-0SLINJJ 192.168.8.100 date'
+                        sh 'ssh -o StrictHostKeyChecking=no -l desktop-0slinjj\pradyumna 192.168.8.100 date'
                     }
                     sshagent(credentials: ['ssh_mypc']) {
                         echo 'connected via ssh to pradyumna'
