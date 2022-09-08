@@ -4,7 +4,8 @@ pipeline {
     agent any
     environment {
         ANSIBLE_SERVER = "167.99.136.157"
-        IMAGE_REPO = "praharlokhande/angularapp:1.1"
+        REPO_NAME = "praharlokhande"
+        IMAGE_REPO = "${REPO_NAME}/angularapp:1.1"
 
     }
     stages {
@@ -21,7 +22,7 @@ pipeline {
               
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            echo '$env.dockerHubUser'
+            echo '"$env.dockerHubUser"'
             sh 'docker build -t ${IMAGE_REPO} .'
             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
           //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
@@ -51,7 +52,9 @@ pipeline {
                 script {
                     echo 'deploying docker image...'
                     sshagent(credentials: ['ssh_mypc']) {
-                        sh 'envsubst < kubernetes/secrets.yaml | kubectl apply -f -'
+                        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                            sh 'kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword"'
+                        }
                         sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
                         sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
                       }
