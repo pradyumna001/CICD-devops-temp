@@ -51,6 +51,9 @@ pipeline {
             steps {
                 script {
                     echo 'deploying docker image...'
+                    kubeconfig(serverUrl: '192.168.8.100') {
+                         echo 'connected via kubeconfig to pradyumna'
+                    }
                     sshagent(['ssh_mypc']) {
                         sh 'ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100'
                     }
