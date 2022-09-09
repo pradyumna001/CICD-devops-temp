@@ -65,7 +65,7 @@ pipeline {
                         dir
                         """
                         sh """
-                        ssh -o StrictHostKeyChecking=no -l pradyumna@192.168.8.100
+                        ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100
                         """
                     }
                     sshagent(credentials: ['ssh_mypc']) {
