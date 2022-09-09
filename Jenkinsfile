@@ -51,6 +51,9 @@ pipeline {
             steps {
                 script {
                     echo 'deploying docker image...'
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
+                            sh 'ssh -i $keyfile user@192.168.8.100 date'
+                        }
 //                     kubeconfig(serverUrl: '192.168.8.100') {
 //                          echo 'connected via kubeconfig to pradyumna'
 //                     }
