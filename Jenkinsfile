@@ -10,43 +10,43 @@ pipeline {
     }
     stages {
         
-        stage("build App") {
-            steps {
-                script {
-                    echo "build app"
-                }
-            }
-        }
+//         stage("build App") {
+//             steps {
+//                 script {
+//                     echo "build app"
+//                 }
+//             }
+//         }
        
-      stage('Docker Push') {
+//       stage('Docker Push') {
               
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            echo '"$env.dockerHubUser"'
-            sh 'docker build -t ${IMAGE_REPO} .'
-            sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
-          //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
-            sh 'docker push ${IMAGE_REPO}'
-       }
-      }
-      }
+//       steps {
+//         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+//             echo '"$env.dockerHubUser"'
+//             sh 'docker build -t ${IMAGE_REPO} .'
+//             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
+//           //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
+//             sh 'docker push ${IMAGE_REPO}'
+//        }
+//       }
+//       }
       
-        stage("Test App") {
-            steps {
-                script {
-                    echo "Test app"
-                }
-            }
-        }
-        stage("build and push image") {
-            steps {
-                script {
+//         stage("Test App") {
+//             steps {
+//                 script {
+//                     echo "Test app"
+//                 }
+//             }
+//         }
+//         stage("build and push image") {
+//             steps {
+//                 script {
                     
-                    echo "build and push image"
+//                     echo "build and push image"
 
-                }
-            }
-        }
+//                 }
+//             }
+//         }
         stage("deploy") {
             steps {
                 script {
