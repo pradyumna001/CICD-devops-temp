@@ -62,7 +62,7 @@ pipeline {
                         dir
                         """
                         sh """
-                        ssh -o StrictHostKeyChecking=no -l 192.168.8.100 date
+                        ssh -o StrictHostKeyChecking=no  192.168.8.100 date
                         """
                     }
                     withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
@@ -82,7 +82,7 @@ pipeline {
                         dir
                         """
                         sh """
-                        ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100
+                        ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 
                         """
                     }
                     sshagent(credentials: ['ssh_mypc']) {
