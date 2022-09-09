@@ -55,7 +55,7 @@ pipeline {
 //                          echo 'connected via kubeconfig to pradyumna'
 //                     }
                     sshagent(['ssh_mypc']) {
-                        sh 'ssh -o StrictHostKeyChecking=no -l pradyumna@DESKTOP-0SLINJJ 192.168.8.100'
+                        sh 'ssh -o StrictHostKeyChecking=no -l desktop-0slinjj\pradyumna@192.168.8.100'
                     }
                     sshagent(credentials: ['ssh_mypc']) {
                         echo 'connected via ssh to pradyumna'
