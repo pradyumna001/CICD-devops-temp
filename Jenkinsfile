@@ -56,6 +56,15 @@ pipeline {
 //                     }
                     sshagent(['ssh_mypc']) {
                         sh """
+                        date
+                        """
+                         sh """
+                        whoami
+                        """
+                         sh """
+                        dir
+                        """
+                        sh """
                         ssh -o StrictHostKeyChecking=no -l desktop-0slinjj\\pradyumna@192.168.8.100
                         """
                     }
