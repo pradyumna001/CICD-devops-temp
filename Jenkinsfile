@@ -51,6 +51,20 @@ pipeline {
             steps {
                 script {
                     echo 'deploying docker image...'
+                    sshagent(['ssh_mypc']) {
+                        sh """
+                        date
+                        """
+                         sh """
+                        whoami
+                        """
+                         sh """
+                        dir
+                        """
+                        sh """
+                        ssh -o StrictHostKeyChecking=no -l 192.168.8.100 date
+                        """
+                    }
                     withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
                             sh 'ssh -i $keyfile $user@192.168.8.100'
                         }
