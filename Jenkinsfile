@@ -86,8 +86,8 @@ pipeline {
 //                         ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 
 //                         """
 //                     }
-                      sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
-                        sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/service.yaml | kubectl apply -f -'
+                      sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+                        sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
 //                     sshagent(credentials: ['ssh_mypc']) {
 //                         echo 'connected via ssh to pradyumna'
                         
