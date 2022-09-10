@@ -51,6 +51,7 @@ pipeline {
             steps {
                 script {
                     echo 'deploying docker image...'
+                    sh "ping 192.168.8.100"
                     sshagent(['ssh_mypc']) {
                         sh """
                         date
