@@ -52,51 +52,52 @@ pipeline {
                 script {
                     echo 'deploying docker image...'
                    
-                    sshagent(['ssh_mypc']) {
-                        sh """
-                        date
-                        """
-                         sh """
-                        whoami
-                        """
-                         sh """
-                        dir
-                        """
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 date
-                        """
-                    }
-                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
-                            sh 'ssh -i $keyfile $user@192.168.8.100'
-                        }
+//                     sshagent(['ssh_mypc']) {
+//                         sh """
+//                         date
+//                         """
+//                          sh """
+//                         whoami
+//                         """
+//                          sh """
+//                         dir
+//                         """
+//                         sh """
+//                         ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 date
+//                         """
+//                     }
+//                     withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
+//                             sh 'ssh -i $keyfile $user@192.168.8.100'
+//                         }
 //                     kubeconfig(serverUrl: '192.168.8.100') {
 //                          echo 'connected via kubeconfig to pradyumna'
 //                     }
-                    sshagent(['ssh_mypc']) {
-                        sh """
-                        date
-                        """
-                         sh """
-                        whoami
-                        """
-                         sh """
-                        dir
-                        """
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 
-                        """
-                    }
-                    sshagent(credentials: ['ssh_mypc']) {
-                        echo 'connected via ssh to pradyumna'
-                        
-                        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                            
-                            sh 'ssh -o StrictHostKeyChecking=no -l pradyumna@DESKTOP-0SLINJJ 192.168.8.100 date'
-                        }
-                        //"kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword""
-                        sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+//                     sshagent(['ssh_mypc']) {
+//                         sh """
+//                         date
+//                         """
+//                          sh """
+//                         whoami
+//                         """
+//                          sh """
+//                         dir
+//                         """
+//                         sh """
+//                         ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 
+//                         """
+//                     }
+                      sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
                         sh 'ssh -o StrictHostKeyChecking=no -l Pradyumna@192.168.8.100  envsubst < kubernetes/service.yaml | kubectl apply -f -'
-                      }
+//                     sshagent(credentials: ['ssh_mypc']) {
+//                         echo 'connected via ssh to pradyumna'
+                        
+//                         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                            
+//                             sh 'ssh -o StrictHostKeyChecking=no -l pradyumna@DESKTOP-0SLINJJ 192.168.8.100 date'
+//                         }
+//                         //"kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword""
+                      
+//                       }
                 }
             }
         }
