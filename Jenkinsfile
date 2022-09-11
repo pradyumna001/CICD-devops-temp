@@ -9,7 +9,14 @@ pipeline {
 
     }
     stages {
-        
+                stage("build App") {
+            steps {
+                script {
+                    echo "build app"
+                    powershell "kubectl"
+                }
+            }
+        }
 //         stage("build App") {
 //             steps {
 //                 script {
