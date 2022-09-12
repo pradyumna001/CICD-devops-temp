@@ -3,7 +3,7 @@
 pipeline {
     agent any
     environment {
-        ANSIBLE_SERVER = "167.99.136.157"
+//         ANSIBLE_SERVER = "167.99.136.157"
         REPO_NAME = "praharlokhande"
         IMAGE_REPO = "${REPO_NAME}/angularapp:1.1"
 
