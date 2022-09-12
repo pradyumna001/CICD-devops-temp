@@ -9,102 +9,47 @@ pipeline {
 
     }
     stages {
-                stage("build App") {
-            steps {
-                script {
-                    echo "build app"
-                    powershell "kubectl"
-                }
-            }
-        }
-//         stage("build App") {
+//                 stage("build App") {
 //             steps {
 //                 script {
 //                     echo "build app"
+//                     sh "npm run build"
+//                     sh "npm run build"
 //                 }
 //             }
 //         }
-       
-//       stage('Docker Push') {
-              
-//       steps {
-//         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-//             echo '"$env.dockerHubUser"'
-//             sh 'docker build -t ${IMAGE_REPO} .'
-//             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
-//           //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
-//             sh 'docker push ${IMAGE_REPO}'
-//        }
-//       }
-//       }
-      
-//         stage("Test App") {
-//             steps {
-//                 script {
-//                     echo "Test app"
-//                 }
-//             }
-//         }
-//         stage("build and push image") {
-//             steps {
-//                 script {
-                    
-//                     echo "build and push image"
 
-//                 }
-//             }
-//         }
+       
+      stage('Docker build and Push') {
+              
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+            echo '"$env.dockerHubUser"'
+            sh 'docker build -t ${IMAGE_REPO} .'
+            sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
+          //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
+            sh 'docker push ${IMAGE_REPO}'
+       }
+      }
+      }
+      
+        stage("Test App") {
+            steps {
+                script {
+                    echo "Testing application"
+                }
+            }
+        }
+
         stage("deploy") {
             steps {
                 script {
                     echo 'deploying docker image...'
-                   
-//                     sshagent(['ssh_mypc']) {
-//                         sh """
-//                         date
-//                         """
-//                          sh """
-//                         whoami
-//                         """
-//                          sh """
-//                         dir
-//                         """
-//                         sh """
-//                         ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 date
-//                         """
-//                     }
-//                     withCredentials([sshUserPrivateKey(credentialsId: 'ssh_mypc', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
-//                             sh 'ssh -i $keyfile $user@192.168.8.100'
-//                         }
-//                     kubeconfig(serverUrl: '192.168.8.100') {
-//                          echo 'connected via kubeconfig to pradyumna'
-//                     }
-//                     sshagent(['ssh_mypc']) {
-//                         sh """
-//                         date
-//                         """
-//                          sh """
-//                         whoami
-//                         """
-//                          sh """
-//                         dir
-//                         """
-//                         sh """
-//                         ssh -o StrictHostKeyChecking=no -l pradyumna 192.168.8.100 
-//                         """
-//                     }
-                      sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
-                        sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
-//                     sshagent(credentials: ['ssh_mypc']) {
-//                         echo 'connected via ssh to pradyumna'
-                        
-//                         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                            
-//                             sh 'ssh -o StrictHostKeyChecking=no -l pradyumna@DESKTOP-0SLINJJ 192.168.8.100 date'
-//                         }
-//                         //"kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword""
-                      
-//                       }
+                    sh 'kubectl apply -f kubernetes/deployment.yaml'
+                    sh 'kubectl apply -f kubernetes/service.yaml'
+//                         sh "kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword""
+//                         sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+//                         sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
                 }
             }
         }
