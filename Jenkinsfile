@@ -24,10 +24,11 @@ pipeline {
               
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            echo '"$env.dockerHubUser"'
+            echo 'docker build and push'
+            
             sh 'docker build -t ${IMAGE_REPO} .'
             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
-          //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
+            //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
             sh 'docker push ${IMAGE_REPO}'
        }
       }
