@@ -25,7 +25,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
             powershell 'docker build -t praharlokhande/angularapp:1.1 .'
-            powershell 'docker login --username praharlokhande  --password Pass@1234'
+           
             powershell 'docker push praharlokhande/angularapp:1.1'
             
 //             echo 'docker build and push'
