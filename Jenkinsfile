@@ -24,12 +24,16 @@ pipeline {
               
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            echo 'docker build and push'
+            powershell 'docker build -t ${IMAGE_REPO} .'
+            powershell 'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
+            powershell 'docker push ${IMAGE_REPO}'
             
-            sh 'docker build -t ${IMAGE_REPO} .'
-            sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
-            //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
-            sh 'docker push ${IMAGE_REPO}'
+//             echo 'docker build and push'
+            
+//             sh 'docker build -t ${IMAGE_REPO} .'
+//             sh'echo "$dockerHubPassword" | docker login --username "$dockerHubUser" --password-stdin'
+//             //sh 'docker login -u $env.dockerHubUser -p $env.dockerHubPassword'
+//             sh 'docker push ${IMAGE_REPO}'
        }
       }
       }
