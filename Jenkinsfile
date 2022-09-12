@@ -49,9 +49,12 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo 'deploying docker image...'
-                    sh 'kubectl apply -f kubernetes/deployment.yaml'
-                    sh 'kubectl apply -f kubernetes/service.yaml'
+                    powershell 'kubectl apply -f kubernetes/deployment.yaml'
+                    powershell 'kubectl apply -f kubernetes/service.yaml'
+                    
+//                     echo 'deploying docker image...'
+//                     sh 'kubectl apply -f kubernetes/deployment.yaml'
+//                     sh 'kubectl apply -f kubernetes/service.yaml'
 //                         sh "kubectl create secret generic docker_secret --from-literal=username="$dockerHubUser" --from-literal=password="$dockerHubPassword""
 //                         sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
 //                         sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
